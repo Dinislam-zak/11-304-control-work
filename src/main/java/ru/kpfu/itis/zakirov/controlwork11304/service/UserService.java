@@ -9,11 +9,13 @@ import java.util.List;
 
 public interface UserService {
 
+    UserLoginDto getUserLoginDto(String login);
+
     List<UserDto> getAll();
 
     UserDto get(Integer id);
 
     UserDto getByLogin(String login);
 
-    void register(UserLoginDto user);
+    void register(String name, String login, String password);
 }

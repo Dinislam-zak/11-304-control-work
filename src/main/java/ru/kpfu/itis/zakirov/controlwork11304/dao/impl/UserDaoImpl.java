@@ -14,6 +14,23 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User get(Integer id) {
+        try {
+            String sql = "select * from users where id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet != null) {
+                resultSet.next();
+                return new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("login"),
+                        resultSet.getString("password")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -28,6 +45,7 @@ public class UserDaoImpl implements UserDao {
                 while (resultSet.next()) {
                     return new User(
                             resultSet.getInt("id"),
+                            resultSet.getString("name"),
                             resultSet.getString("login"),
                             resultSet.getString("password")
                     );
@@ -51,6 +69,7 @@ public class UserDaoImpl implements UserDao {
                     users.add(
                             new User(
                                     resultSet.getInt("id"),
+                                    resultSet.getString("name"),
                                     resultSet.getString("login"),
                                     resultSet.getString("password")
                             )
@@ -65,11 +84,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        String sql = "insert into users (login, password) values (?, ?)";
+        String sql = "insert into users (name, login, password) values (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLogin());
+            preparedStatement.setString(3, user.getPassword());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

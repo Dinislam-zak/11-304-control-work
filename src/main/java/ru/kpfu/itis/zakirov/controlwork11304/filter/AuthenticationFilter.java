@@ -8,8 +8,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/*", filterName = "authFilter")
+@WebFilter("/*")
 public class AuthenticationFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
@@ -21,7 +22,7 @@ public class AuthenticationFilter implements Filter {
 
         String uri = httpServletRequest.getRequestURI();
         HttpSession session = httpServletRequest.getSession(false);
-        if (session == null && !uri.contains("login") && !uri.contains("register")) {
+        if (session == null && !uri.equals("/login") && !uri.equals("/register")) {
             ((HttpServletResponse) response).sendRedirect("/login");
         } else {
             chain.doFilter(request, response);

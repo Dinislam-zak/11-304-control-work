@@ -14,5 +14,5 @@ public interface AttemptService {
 
     AttemptDto getByLogin(String login);
 
-    void registerAttempt(AttemptDto attempt);
+    void registerAttempt(String login, Boolean status);
 }

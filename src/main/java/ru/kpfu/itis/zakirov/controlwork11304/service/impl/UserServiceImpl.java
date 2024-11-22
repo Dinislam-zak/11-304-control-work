@@ -12,32 +12,52 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
-
     private final UserDao userDao = new UserDaoImpl();
 
     @Override
-    public List<UserDto> getAll() {
-        return userDao.getAll().stream().map(
-                u -> new UserDto(u.getLogin(), null)
-        ).collect(Collectors.toList());
+    public UserLoginDto getUserLoginDto(String login) {
+        User user = userDao.getByLogin(login);
+        return new UserLoginDto(
+                user.getLogin(),
+                user.getPassword()
+        );
     }
 
     @Override
     public UserDto get(Integer id) {
-        return null;
+        User user = userDao.get(id);
+        return new UserDto(
+                user.getName(),
+                user.getLogin()
+        );
     }
 
     @Override
     public UserDto getByLogin(String login) {
-        User u = userDao.getByLogin(login);
-        return new UserDto(u.getLogin(), null);
+        User user = userDao.getByLogin(login);
+        return new UserDto(
+                user.getName(),
+                user.getLogin()
+        );
     }
 
     @Override
-    public void register(UserLoginDto user) {
-        userDao.save(new User(
-                user.getLogin(),
-                PasswordUtil.encrypt(user.getPassword())
-        ));
+    public List<UserDto> getAll() {
+        List<User> users = userDao.getAll();
+        return users.stream()
+                .map(u -> new UserDto(u.getName(), u.getLogin()))
+                .toList();
+    }
+
+    @Override
+    public void register(String name, String login, String password) {
+        userDao.save(
+                new User(
+                        null,
+                        name,
+                        login,
+                        PasswordUtil.encrypt(password)
+                )
+        );
     }
 }

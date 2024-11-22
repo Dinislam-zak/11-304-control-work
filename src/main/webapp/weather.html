@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+</head>
+<body>
+
+<form method="post" action="/weather" >
+    <div>
+        <label for="city">Enter city name:</label>
+        <input type="text" id="city" name="city" required>
+    </div>
+    <div>
+        <button type="submit">Enter</button>
+    </div>
+</form>
+
+<div>
+    <h2>Weather Information</h2>
+    <p>Температура:
+        <span th:text="${temperature}">Здесь будет температура</span> °C
+    </p>
+</div>
+</body>
+</html>

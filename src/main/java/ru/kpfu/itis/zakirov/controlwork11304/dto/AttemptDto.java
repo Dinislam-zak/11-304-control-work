@@ -1,16 +1,15 @@
 package ru.kpfu.itis.zakirov.controlwork11304.dto;
 
-import java.time.LocalDateTime;
 
 public class AttemptDto {
 
     private String login;
 
-    private LocalDateTime time;
+    private String time;
 
-    private boolean attempt;
+    private String attempt;
 
-    public AttemptDto(String login, LocalDateTime time, boolean attempt) {
+    public AttemptDto(String login, String time, String attempt) {
         this.login = login;
         this.time = time;
         this.attempt = attempt;
@@ -20,11 +19,11 @@ public class AttemptDto {
         return login;
     }
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public boolean getAttempt() {
+    public String getAttempt() {
         return attempt;
     }
 }

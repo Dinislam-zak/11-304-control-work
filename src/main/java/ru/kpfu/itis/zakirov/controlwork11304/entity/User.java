@@ -2,7 +2,9 @@ package ru.kpfu.itis.zakirov.controlwork11304.entity;
 
 public class User {
 
-    private int id;
+    private Integer id;
+
+    private String name;
 
     private String login;
 
@@ -20,13 +22,19 @@ public class User {
         return password;
     }
 
-    public User(String login, String password) {
+    public String getName() {
+        return name;
+    }
+
+    public User(String name, String login, String password) {
+        this.name = name;
         this.login = login;
         this.password = password;
     }
 
-    public User(int id, String login, String password) {
+    public User(Integer id, String name, String login, String password) {
         this.id = id;
+        this.name = name;
         this.login = login;
         this.password = password;
     }

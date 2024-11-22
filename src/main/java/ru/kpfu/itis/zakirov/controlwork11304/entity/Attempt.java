@@ -4,32 +4,32 @@ import java.time.LocalDateTime;
 
 public class Attempt {
 
-    private int id;
+    private Integer id;
 
     private String login;
 
     private LocalDateTime time;
 
-    private boolean attempt;
+    private Boolean attemptStatus;
 
-    public Attempt(int id, String login, LocalDateTime time, boolean attempt) {
+    public Attempt(Integer id, String login, LocalDateTime time, Boolean attemptStatus) {
         this.id = id;
         this.login = login;
         this.time = time;
-        this.attempt = attempt;
+        this.attemptStatus = attemptStatus;
     }
 
-    public Attempt(String login, LocalDateTime time, boolean attempt) {
+    public Attempt(String login, LocalDateTime time, Boolean attemptStatus) {
         this.login = login;
         this.time = time;
-        this.attempt = attempt;
+        this.attemptStatus = attemptStatus;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -37,7 +37,8 @@ public class Attempt {
         return time;
     }
 
-    public boolean getAttempt() {
-        return attempt;
+    public Boolean getAttemptStatus() {
+        return attemptStatus;
     }
+
 }
