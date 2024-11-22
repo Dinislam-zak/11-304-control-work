@@ -26,7 +26,7 @@ public class WeatherServlet extends HttpServlet {
         params.put("lang", "en");
         params.put("units", "metric");
 
-        String jsonResponse = httpClient.get(URL, null, params);
+        String jsonResponse = httpClient.get(URL, Map.of(), params);
 
         JSONObject jsonObject = new JSONObject(jsonResponse);
 
@@ -34,7 +34,7 @@ public class WeatherServlet extends HttpServlet {
 
         req.setAttribute("temperature", temperature);
 
-        req.getRequestDispatcher("weather.html").forward(req, resp);
+        req.getRequestDispatcher("weather.jsp").forward(req, resp);
     }
 }
 
