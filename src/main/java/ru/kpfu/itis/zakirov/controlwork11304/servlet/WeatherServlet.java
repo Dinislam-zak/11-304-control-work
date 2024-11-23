@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import ru.kpfu.itis.zakirov.controlwork11304.http.impl.HttpClientImpl;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class WeatherServlet extends HttpServlet {
     private final String URL = "http://api.openweathermap.org/data/2.5/weather";
     private final String API_KEY = "ec6ae61f58c44f36d3bd7d4f99c9993a";
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String city = req.getParameter("city");
 
         Map<String, String> params = new HashMap<>();
@@ -32,9 +33,41 @@ public class WeatherServlet extends HttpServlet {
 
         double temperature = jsonObject.getJSONObject("main").getDouble("temp");
 
-        req.setAttribute("temperature", temperature);
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
 
-        req.getRequestDispatcher("weather.jsp").forward(req, resp);
+
+        try (PrintWriter out = resp.getWriter()) {
+            out.print(temperature);
+            out.flush();
+        }
     }
+    /*public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String city = req.getParameter("city");
+
+        Map<String, String> params = new HashMap<>();
+        params.put("q", city);
+        params.put("appid", API_KEY);
+        params.put("lang", "en");
+        params.put("units", "metric");
+
+        String jsonResponse = httpClient.get(URL, Map.of(), params);
+
+        JSONObject jsonObject = new JSONObject(jsonResponse);
+
+
+        double temperature = jsonObject.getJSONObject("main").getDouble("temp");
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+
+        try (PrintWriter out = resp.getWriter()) {
+            out.print("Температура в " + city + ": "+ temperature);
+            out.flush();
+        }
+        *//*req.setAttribute("temperature", temperature);
+
+        req.getRequestDispatcher("weather.jsp").forward(req, resp);*//*
+    }*/
 }
 
